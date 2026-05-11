@@ -1,4 +1,4 @@
-use rand::seq::SliceRandom;
+use rand::seq::IndexedRandom;
 use ratatui::style::Color;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -34,7 +34,7 @@ impl Serialize for ColorTypes {
 
 pub fn make_random_color() -> Color {
     use Color::*;
-    let mut random = rand::thread_rng();
+    let mut random = rand::rng();
     let colors = [
         Red,
         Black,

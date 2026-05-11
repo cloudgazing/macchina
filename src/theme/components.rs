@@ -1,6 +1,6 @@
 use crate::theme::borders::Border;
 use crate::theme::color::*;
-use rand::Rng;
+use rand::RngExt;
 use ratatui::style::Color;
 use ratatui::widgets::BorderType;
 use serde::{Deserialize, Serialize};
@@ -94,15 +94,15 @@ impl Randomize {
             match pool {
                 ColorTypes::Base => return make_random_color(),
                 ColorTypes::Indexed => {
-                    let mut rng = rand::thread_rng();
-                    return Color::Indexed(rng.gen_range(0..=127));
+                    let mut rng = rand::rng();
+                    return Color::Indexed(rng.random_range(0..=127));
                 }
                 ColorTypes::Hexadecimal => {
-                    let mut rng = rand::thread_rng();
+                    let mut rng = rand::rng();
                     let rgb = (
-                        rng.gen_range(0..=255),
-                        rng.gen_range(0..=255),
-                        rng.gen_range(0..=255),
+                        rng.random_range(0..=255),
+                        rng.random_range(0..=255),
+                        rng.random_range(0..=255),
                     );
                     return Color::Rgb(rgb.0, rgb.1, rgb.2);
                 }
