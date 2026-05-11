@@ -271,11 +271,9 @@ impl Bar {
     }
 
     pub fn hide_delimiters(&mut self) {
-        if let Some(h) = self.hide_delimiters {
-            if h {
-                self.symbol_open = Some('\0');
-                self.symbol_close = Some('\0');
-            }
+        if self.hide_delimiters.unwrap_or(false) {
+            self.symbol_open = Some('\0');
+            self.symbol_close = Some('\0');
         }
     }
 

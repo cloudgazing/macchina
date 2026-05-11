@@ -9,6 +9,10 @@ separator       = ""
 border          = "plain"
 visible         = true
 
+[box.inner_margin]
+x               = 2
+y               = 1
+
 [palette]
 glyph           = "○"
 spacing         = 2
@@ -18,10 +22,6 @@ visible         = true
 glyph           = "○"
 hide_delimiters = true
 visible         = true
-
-[box.inner_margin]
-x               = 2
-y               = 1
 
 [custom_ascii]
 color           = "#FF7001"

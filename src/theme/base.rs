@@ -1,9 +1,9 @@
+use crate::Result;
 use crate::cli::{Opt, PKG_NAME};
 use crate::data::ReadoutKey;
 use crate::error;
 use crate::extra;
 use crate::theme::components::*;
-use crate::Result;
 use colored::Colorize;
 use dirs;
 use ratatui::style::Color;
@@ -145,18 +145,14 @@ impl Theme {
     }
 
     pub fn set_active(&mut self, theme_name: Option<&String>) {
-        if let Some(name) = theme_name {
-            if self.name.eq(name) {
-                self.active = true;
-            }
+        if theme_name.is_some_and(|name| self.name.eq(name)) {
+            self.active = true;
         }
     }
 
     fn set_name(&mut self) {
-        if let Some(f) = self.filepath.file_stem() {
-            if let Some(s) = f.to_str() {
-                self.name = s.to_string();
-            }
+        if let Some(s) = self.filepath.file_stem().and_then(|f| f.to_str()) {
+            self.name = s.to_string();
         }
     }
 
@@ -317,22 +313,20 @@ pub fn list_themes(opt: &Opt) {
                 .iter()
                 .filter(|x| extra::path_extension(x).unwrap_or_default() == "toml")
                 .for_each(|theme| {
-                    if let Some(str) = theme.file_name() {
-                        if let Some(name) = str.to_str() {
-                            match get_theme(theme) {
-                                Ok(mut t) => {
-                                    t.set_filepath(dir.join(name));
-                                    t.set_name();
-                                    t.set_active(opt.theme.as_ref());
-                                    println!("{t}");
-                                }
-                                Err(e) => {
-                                    println!(
-                                        "- {}: {}",
-                                        name.replace(".toml", ""),
-                                        e.to_string().yellow()
-                                    );
-                                }
+                    if let Some(name) = theme.file_name().and_then(|s| s.to_str()) {
+                        match get_theme(theme) {
+                            Ok(mut t) => {
+                                t.set_filepath(dir.join(name));
+                                t.set_name();
+                                t.set_active(opt.theme.as_ref());
+                                println!("{t}");
+                            }
+                            Err(e) => {
+                                println!(
+                                    "- {}: {}",
+                                    name.replace(".toml", ""),
+                                    e.to_string().yellow()
+                                );
                             }
                         }
                     }

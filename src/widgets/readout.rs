@@ -1,6 +1,6 @@
 use crate::data::{Readout, ReadoutKey};
-use crate::theme::components::{Palette, PaletteType};
 use crate::theme::Theme;
+use crate::theme::components::{Palette, PaletteType};
 use ratatui::buffer::Buffer;
 use ratatui::layout::{Margin, Rect};
 use ratatui::style::{Color, Style};

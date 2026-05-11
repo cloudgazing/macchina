@@ -273,8 +273,8 @@ fn handle_readout_packages(readout_values: &mut Vec<Readout>) {
 }
 
 fn handle_readout_local_ip(readout_values: &mut Vec<Readout>, opt: &Opt) {
-    use libmacchina::traits::NetworkReadout as _;
     use libmacchina::NetworkReadout;
+    use libmacchina::traits::NetworkReadout as _;
 
     let network_readout = NetworkReadout::new();
     match network_readout.logical_address(opt.interface.as_deref()) {
